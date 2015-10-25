@@ -2,10 +2,18 @@ div(ng-controller='ModalCtrl')
      nav.navbar.navbar-default(role='navigation')
        #bs-example-navbar-collapse-1.collapse.navbar-collapse
          ul.nav.navbar-nav.navbar-right
+          if !user
            li
              button.btn.btn-default(type='button', ng-click='open_login()') Login
            li
              button.btn.btn-default(type='button', ng-click='open_signup()') Signup
+          else
+           li
+             h3(ng-click='profile()') #{user.local.email}
+
+           li 
+             a.btn.btn-default(href="/logout") Logout
+
      script(type='text/ng-template', id='signin.html').
        <form ng-submit="processForm()">
        <div class="modal-header">
@@ -13,12 +21,13 @@ div(ng-controller='ModalCtrl')
        </div>
        <div class="modal-body">
        <div class="form-group">
+       <div>{{errors}}</div>
        <label for="exampleInputEmail1">Email address</label>
-       <input class="form-control" id="exampleInputEmail1" placeholder="Enter email" type="email" ng-model="login.Email">
+       <input class="form-control" id="exampleInputEmail1" placeholder="Enter email" type="email" ng-model="login.email">
        </div>
        <div class="form-group">
        <label for="exampleInputPassword1">Password</label>
-       <input class="form-control" id="exampleInputPassword1" placeholder="Password" type="password" ng-model="login.Passport">
+       <input class="form-control" id="exampleInputPassword1" placeholder="Password" type="password" ng-model="login.password">
        </div>
        <p class="text-right"><a href="#">Forgot password?</a></p>
        </div>
@@ -34,8 +43,9 @@ div(ng-controller='ModalCtrl')
        </div>
        <div class="modal-body">
        <div class="form-group">
+       <div>{{errors}}</div>
        <label for="exampleInputEmail1">Email address</label>
-       <input class="form-control" id="exampleInputEmail1" placeholder="Enter email" type="email" ng-model="signup.Email">
+       <input class="form-control" id="exampleInputEmail1" placeholder="Enter email" type="email" ng-model="signup.email">
        </div>
        <div class="form-group">
        <label for="exampleInputPassword1">Password</label>

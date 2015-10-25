@@ -67,60 +67,61 @@ angular.module('marketApp').controller('ModalCtrl',function ($scope, $uibModal, 
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // // It is not the same as the $uibModal service used above.
 
-angular.module('marketApp').controller('loginCtrl',['$scope','$http','$uibModalInstance',function ($scope,$http, $uibModalInstance) {
+angular.module('marketApp').controller('loginCtrl',['$scope','$http','$uibModalInstance','$location',function ($scope,$http, $uibModalInstance,$location) {
 
 
   $scope.ok = function () {
-  console.log($scope.login);
+  
     $http({
       method  : 'POST',
       url     : '/login',
-      data    : $scope.login,  // pass in data as strings
-      headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
+      data    : $scope.login,  
+      headers : { 'Content-Type': 'application/json' }  
     })
     .success(function(data) {
-      console.log(data);
+      
 
-      if (!data.success) {
+      if (data.message) {
         // if not successful, bind errors to error variables
-        $scope.errorName = data.errors.name;
-        $scope.errorSuperhero = data.errors.superheroAlias;
+        $scope.errors = data.message[0];
+        
       } else {
         // if successful, bind success message to message
-        $scope.message = data.message;
+         $location.path('/').replace();
+         $uibModalInstance.close($scope.login);
       }
     });
-    $uibModalInstance.close($scope.login);
+   
   };
 
   $scope.cancel = function () {
     $uibModalInstance.dismiss('cancel');
   };
 }]);
-angular.module('marketApp').controller('signupCtrl',['$scope','$http','$uibModalInstance',function ($scope,$http, $uibModalInstance) {
+angular.module('marketApp').controller('signupCtrl',['$scope','$http','$uibModalInstance','$location',function ($scope,$http, $uibModalInstance,$location) {
 
 
   $scope.ok = function () {
-  console.log($scope.signup);
+  
     $http({
       method  : 'POST',
       url     : '/signup',
       data    : $scope.signup,  // pass in data as strings
-      headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
+      headers : { 'Content-Type': 'application/json' }  // set the headers so angular passing info as form data (not request payload)
     })
     .success(function(data) {
-      console.log(data);
+      
 
-      if (!data.success) {
+      if (data.message) {
         // if not successful, bind errors to error variables
-        $scope.errorName = data.errors.name;
-        $scope.errorSuperhero = data.errors.superheroAlias;
+        $scope.errors = data.message[0]
       } else {
         // if successful, bind success message to message
-        $scope.message = data.message;
+        $location.path('/').replace();
+        $uibModalInstance.close($scope.signup);
       }
     });
-    $uibModalInstance.close($scope.signup);
+    
   };
 
   $scope.cancel = function () {

@@ -20,21 +20,19 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ 
-  secret: 'marketymarketapp',
-  resave: false,
-  saveUninitialized: true,
+  secret: 'marketymarketapp'
 })); // session secret
 app.use(passport.initialize());
-// app.use(passport.session()); // persistent login sessions
+app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
-require('./config/passport')(passport);
+require('./config/passport')(passport); 
 app.use(function(req, res, next) {
   if(req.user){
-    console.log(req.user)
+  console.log(req.user)
     res.locals.user = req.user;
     next();
   }

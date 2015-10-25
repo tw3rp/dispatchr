@@ -5,7 +5,8 @@ block content
    .text-center
      h1 An awesome marketplace
      p.lead You can buy a lot of stuff
-   h1 Hello {{ login }}
+   if user
+    h1 Hello #{user}
    script(type='text/javascript', src='javascripts/jquery-2.1.4.min.js')
    script(type='text/javascript', src='javascripts/angular.min.js')
    script(type='text/javascript', src='javascripts/angular-animate.js')
