@@ -1,15 +1,29 @@
 extends layout
 
-block content
-   include ./navbar.jade
-   .text-center
-     h1 An awesome marketplace
-     p.lead You can buy a lot of stuff
-   if user
-    h1 Hello #{user}
-   script(type='text/javascript', src='javascripts/jquery-2.1.4.min.js')
-   script(type='text/javascript', src='javascripts/angular.min.js')
-   script(type='text/javascript', src='javascripts/angular-animate.js')
-   script(type='text/javascript', src='javascripts/bootstrap.min.js', integrity='sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==', crossorigin='anonymous')
-   script(type='text/javascript', src='javascripts/ui-bootstrap-tpls-0.14.3.min.js')
-   script(src='javascripts/index.js')
+block content 
+  include ./navbar.jade
+  .text-center
+    h1 An awesome marketplace
+    p.lead You can buy a lot of stuff
+  .container(ng-controller="list-controller")    
+    div(ng-repeat="x in list")      
+      .row
+        .col-sm-4.col-lg-4.col-md-4
+          .thumbnail
+            .caption
+              h4.pull-right ${{x.price}}
+              h4
+                a(href='#') {{x.title}}
+              p
+                | {{x.description}}
+              if user
+                if user.local.admin
+                  h4.pull-right
+                    a(href="{{id}}") delete 
+
+  script(type='text/javascript', src='javascripts/jquery-2.1.4.min.js')
+  script(type='text/javascript', src='javascripts/angular.min.js')
+  script(type='text/javascript', src='javascripts/angular-animate.js')
+  script(type='text/javascript', src='javascripts/bootstrap.min.js', integrity='sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==', crossorigin='anonymous')
+  script(type='text/javascript', src='javascripts/ui-bootstrap-tpls-0.14.3.min.js')
+  script(src='javascripts/index.js')

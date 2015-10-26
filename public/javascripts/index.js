@@ -1,19 +1,14 @@
 // define angular module/app
 angular.module('marketApp', ['ngAnimate','ui.bootstrap'])
 
-// create angular controller and pass in $scope and $http
-// .controller('marketController',['$scope','$http', function($scope, $http) {
-//   // create a blank object to hold our form information
-//   // $scope will allow this to pass between controller and view
-//   $scope.login = {};
-//   // process the form
-//   $scope.processForm = function() {
-//     console.log("hello");
-//   }
-//
-//   }]);
-angular.module('marketApp').controller('ModalCtrl',function ($scope, $uibModal, $log) {
 
+angular.module('marketApp').controller('ModalCtrl',function ($scope, $http, $uibModal, $log) {
+  
+  $http.get('/getUserData').success(function(data) {
+    $scope.user = data;
+    console.log(data);
+    
+  });
 
   $scope.animationsEnabled = true;
   $scope.open_signup = function (size) {
@@ -25,6 +20,26 @@ angular.module('marketApp').controller('ModalCtrl',function ($scope, $uibModal, 
       resolve: {
         items: function () {
           return $scope.signup;
+        }
+      }
+    });
+
+    modalInstance_signup.result.then(function (selectedItem) {
+      $scope.selected = selectedItem;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+
+  $scope.open_list = function (size) {
+    var modalInstance_signup = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'listobject.html',
+      controller: 'listCtrl',
+      size: size,
+      resolve: {
+        items: function () {
+          return $scope.list;
         }
       }
     });
@@ -71,7 +86,7 @@ angular.module('marketApp').controller('loginCtrl',['$scope','$http','$uibModalI
 
 
   $scope.ok = function () {
-  
+    
     $http({
       method  : 'POST',
       url     : '/login',
@@ -98,23 +113,63 @@ angular.module('marketApp').controller('loginCtrl',['$scope','$http','$uibModalI
     $uibModalInstance.dismiss('cancel');
   };
 }]);
-angular.module('marketApp').controller('signupCtrl',['$scope','$http','$uibModalInstance','$location',function ($scope,$http, $uibModalInstance,$location) {
+
+angular.module('marketApp').controller('listCtrl',['$scope','$http','$uibModalInstance','$location',function ($scope,$http, $uibModalInstance,$location) {
 
 
-  $scope.ok = function () {
-  
+  $scope.submit = function () {
+    
+    if($scope.list){
     $http({
       method  : 'POST',
-      url     : '/signup',
-      data    : $scope.signup,  // pass in data as strings
-      headers : { 'Content-Type': 'application/json' }  // set the headers so angular passing info as form data (not request payload)
+      url     : '/postObject',
+      data    : $scope.list,  
+      headers : { 'Content-Type': 'application/json' }  
     })
     .success(function(data) {
-      
+      console.log(data);
 
       if (data.message) {
         // if not successful, bind errors to error variables
-        $scope.errors = data.message[0]
+        $scope.errors_list = data.message;
+        
+      } else {
+        // if successful, bind success message to message
+         $location.path('/').replace();
+         $uibModalInstance.dismiss('cancel');
+      }
+    });
+   }
+  };
+
+  $scope.close_list = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+}]);
+
+
+angular.module('marketApp').controller('signupCtrl',['$scope','$http','$uibModalInstance','$location',function ($scope,$http, $uibModalInstance,$location) {
+
+
+  $scope.ok_user = function () {
+    var sendData = {
+      email:$scope.signup_user.email,
+      password:$scope.signup_user.password,
+      admin:false
+    }
+    $http({
+      method  : 'POST',
+      url     : '/signup',
+      data    : sendData,  // pass in data as strings
+      headers : { 'Content-Type': 'application/json' }  // set the headers so angular passing info as form data (not request payload)
+    })
+    .success(function(data) {
+      console.log(data)
+
+      if (data.message) {
+        // if not successful, bind errors to error variables
+        
+        $scope.errors_user = data.message[0]
       } else {
         // if successful, bind success message to message
         $location.path('/').replace();
@@ -124,7 +179,66 @@ angular.module('marketApp').controller('signupCtrl',['$scope','$http','$uibModal
     
   };
 
-  $scope.cancel = function () {
+  $scope.cancel_user = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+
+  $scope.ok_admin = function () {
+    var sendData = {
+      email:$scope.signup_admin.email,
+      password:$scope.signup_admin.password,
+      admin:true
+    }
+    $http({
+      method  : 'POST',
+      url     : '/signup',
+      data    : sendData,  // pass in data as json
+      headers : { 'Content-Type': 'application/json' }  // set the headers so angular passing info as request payload
+    })
+    .success(function(data) {
+      console.log(data)
+
+      if (data.message) {
+        // if not successful, bind errors to error variables
+        
+        $scope.errors_admin = data.message[0]
+      } else {
+        // if successful, bind success message to message
+        $location.path('/').replace();
+        $uibModalInstance.close($scope.signup);
+      }
+    });
+    
+  };
+
+  $scope.cancel_admin = function () {
     $uibModalInstance.dismiss('cancel');
   };
 }]);
+
+angular.module('marketApp').controller('list-controller',function ($scope, $http, $uibModal, $log) {
+  $http({
+        method  : 'GET',
+        url     : '/getPosts' // set the headers so angular passing info as request payload
+      })
+      .success(function(data) {
+        console.log(data) 
+
+        if (data.message) {
+          // if not successful, bind errors to error variables
+          
+          $scope.errors_admin = data.message[0]
+        } else {
+          // if successful, bind success message to message
+          return true;
+        }
+      });
+  $scope.list =[{
+    price:"200",
+    description:"product1",
+    title:"title1"
+  }];
+
+  
+
+})

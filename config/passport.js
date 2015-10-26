@@ -21,7 +21,6 @@ var passport_export = function(passport){
     passReqToCallback : true 
   },
   function(req,email,password,done){
-    
     process.nextTick(function(){
       
       User.findOne({'local.email': email}, function(err,user){
@@ -31,14 +30,21 @@ var passport_export = function(passport){
           return done(err);
         }
         if(user){
-          
+          console.log(user.local.admin);
+          if(user.local.admin){ 
+          return done(null, false, req.flash('signupMessage', 'The user is already the admin'));
+          }
+          else{
           return done(null, false, req.flash('signupMessage', 'That email is already taken'));
+          
+          }
         }
         else{
           
           var newUser = new User();
           newUser.local.email = email;
           newUser.local.password = newUser.generateHash(password);
+          newUser.local.admin =req.body.admin;
           newUser.save(function(err){
             if(err)
               throw err;
@@ -62,7 +68,7 @@ var passport_export = function(passport){
         return done(err);
       }
       if(!user){
-        console.log("im in user", email);
+       
         return done(null, false, req.flash('loginMessage','No user found'));
       }
       if(!user.validPassword(password)){

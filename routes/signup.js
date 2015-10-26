@@ -4,15 +4,12 @@ var passport =require('passport');
 
 router.get('/', function(req, res) {
      //   render the page and pass in any flash data if it exists
-     	  
-          res.json({message:req.flash('signupMessage')}); 
+     	    var signupMessage = req.flash("signupMessage"); 
+          res.json({message:signupMessage});
+          //res.json({message:req.flash('signupMessage')}); 
 });
 
-router.get('/signup_success', function(req, res) {
-     //   render the page and pass in any flash data if it exists
-     	  
-          res.json({message:req.user.local.email}); 
-});
+
 
 router.post('/', passport.authenticate('local-signup', {
         successRedirect : '/signup_success', // redirect to the secure profile section
