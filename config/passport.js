@@ -30,7 +30,6 @@ var passport_export = function(passport){
           return done(err);
         }
         if(user){
-          console.log(user.local.admin);
           if(user.local.admin){ 
           return done(null, false, req.flash('signupMessage', 'The user is already the admin'));
           }

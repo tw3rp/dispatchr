@@ -1,5 +1,5 @@
 // define angular module/app
-angular.module('marketApp', ['ngAnimate','ui.bootstrap'])
+angular.module('marketApp', ['ngAnimate','ui.bootstrap','ngRoute'])
 
 
 angular.module('marketApp').controller('ModalCtrl',function ($scope, $http, $uibModal, $log) {
@@ -82,7 +82,7 @@ angular.module('marketApp').controller('ModalCtrl',function ($scope, $http, $uib
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // // It is not the same as the $uibModal service used above.
 
-angular.module('marketApp').controller('loginCtrl',['$scope','$http','$uibModalInstance','$location',function ($scope,$http, $uibModalInstance,$location) {
+angular.module('marketApp').controller('loginCtrl',['$scope','$http','$route','$window', '$uibModalInstance','$location',function ($scope,$http,$route, $window, $uibModalInstance,$location) {
 
 
   $scope.ok = function () {
@@ -102,8 +102,8 @@ angular.module('marketApp').controller('loginCtrl',['$scope','$http','$uibModalI
         
       } else {
         // if successful, bind success message to message
-         $location.path('/').replace();
          $uibModalInstance.close($scope.login);
+        $window.location.reload();
       }
     });
    
@@ -114,7 +114,7 @@ angular.module('marketApp').controller('loginCtrl',['$scope','$http','$uibModalI
   };
 }]);
 
-angular.module('marketApp').controller('listCtrl',['$scope','$http','$uibModalInstance','$location',function ($scope,$http, $uibModalInstance,$location) {
+angular.module('marketApp').controller('listCtrl',['$scope','$http','$route','$window', '$uibModalInstance','$location',function ($scope,$http,$route,$window, $uibModalInstance,$location) {
 
 
   $scope.submit = function () {
@@ -135,8 +135,8 @@ angular.module('marketApp').controller('listCtrl',['$scope','$http','$uibModalIn
         
       } else {
         // if successful, bind success message to message
-         $location.path('/').replace();
          $uibModalInstance.dismiss('cancel');
+         $window.location.reload();
       }
     });
    }
@@ -148,7 +148,7 @@ angular.module('marketApp').controller('listCtrl',['$scope','$http','$uibModalIn
 }]);
 
 
-angular.module('marketApp').controller('signupCtrl',['$scope','$http','$uibModalInstance','$location',function ($scope,$http, $uibModalInstance,$location) {
+angular.module('marketApp').controller('signupCtrl',['$scope','$http','$route','$window','$uibModalInstance','$location',function ($scope,$http,$route,$window, $uibModalInstance,$location) {
 
 
   $scope.ok_user = function () {
@@ -166,14 +166,15 @@ angular.module('marketApp').controller('signupCtrl',['$scope','$http','$uibModal
     .success(function(data) {
       console.log(data)
 
-      if (data.message) {
+      if (data.messawge) {
         // if not successful, bind errors to error variables
         
         $scope.errors_user = data.message[0]
       } else {
         // if successful, bind success message to message
-        $location.path('/').replace();
+        
         $uibModalInstance.close($scope.signup);
+        $window.location.reload();
       }
     });
     
@@ -204,8 +205,9 @@ angular.module('marketApp').controller('signupCtrl',['$scope','$http','$uibModal
         $scope.errors_admin = data.message[0]
       } else {
         // if successful, bind success message to message
-        $location.path('/').replace();
+        
         $uibModalInstance.close($scope.signup);
+        $window.location.reload();
       }
     });
     
@@ -222,7 +224,7 @@ angular.module('marketApp').controller('list-controller',function ($scope, $http
         url     : '/getPosts' // set the headers so angular passing info as request payload
       })
       .success(function(data) {
-        console.log(data) 
+        
 
         if (data.message) {
           // if not successful, bind errors to error variables
@@ -230,14 +232,30 @@ angular.module('marketApp').controller('list-controller',function ($scope, $http
           $scope.errors_admin = data.message[0]
         } else {
           // if successful, bind success message to message
-          return true;
+          $scope.list = data;
         }
       });
-  $scope.list =[{
-    price:"200",
-    description:"product1",
-    title:"title1"
-  }];
+
+  $scope.delete =function(item) {
+     
+     $http({
+        method  : 'GET',
+        url     : '/delete/'+ item // set the headers so angular passing info as request payload
+      })
+      .success(function(data) {
+        console.log(data);
+        if (data.message) {
+          // if not successful, bind errors to error variables
+          
+          $scope.errors_admin = data.message[0]
+        } else {
+          // if successful, bind success message to message
+          $scope.list=data;
+        }
+      });
+
+  };
+  
 
   
 

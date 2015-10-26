@@ -32,7 +32,6 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 require('./config/passport')(passport); 
 app.use(function(req, res, next) {
   if(req.user){
-  console.log(req.user)
     res.locals.user = req.user;
     next();
   }

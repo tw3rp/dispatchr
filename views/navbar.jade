@@ -23,7 +23,7 @@ div(ng-controller='ModalCtrl')
                 li 
                   a(ng-click='open_list()') listwithus
               li
-                h4(ng-click='profile()' style="color:white;") #{user.local.email}  
+                a(ng-click='profile()' style="color:white;") #{user.local.email}  
 
               li 
                 a(href="/logout") Logout
@@ -74,7 +74,7 @@ div(ng-controller='ModalCtrl')
                 </div>
               </div>
               <div class="modal-footer">
-                <button class="btn btn-primary" type="submit" ng-click="submit()">signup</button>
+                <button class="btn btn-primary" type="submit" ng-click="submit()">Post</button>
                 <button class="btn btn-warning" type="button" ng-click="close_list()">Cancel</button>
               </div>
             </form>
