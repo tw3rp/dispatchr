@@ -36,27 +36,27 @@ router.get('/delete/:id',function(req,res){
           res.json([
             {
               price:"100",
-              description:"fake data cannot be deleted list as admin first",
+              description:"fake data cannot be deleted login and list as admin first",
               title:"product 1"
             },
             {
               price:"100",
-              description:"fake data cannot be deleted list as admin first",
+              description:"fake data cannot be deleted login and list as admin first",
               title:"product 2"
             },
             {
               price:"100",
-              description:"fake data cannot be deleted list as admin first",
+              description:"fake data cannot be deleted login and list as admin first",
               title:"product 3"
             },
             {
               price:"100",
-              description:"fake data cannot be deleted list as admin first",
+              description:"fake data cannot be deleted login and list as admin first",
               title:"product 4"
             },
             {
               price:"100",
-              description:"fake data cannot be deleted list as admin first",
+              description:"fake data cannot be deleted login and list as admin first",
               title:"product 5"
             }
           ]);
@@ -92,27 +92,27 @@ router.get('/getPosts', function(req, res) {
       res.json([
         {
           price:"100",
-          description:"fake data cannot be deleted list as admin first",
+          description:"fake data cannot be deleted login and list as admin first",
           title:"product 1"
         },
         {
           price:"100",
-          description:"fake data cannot be deleted list as admin first",
+          description:"fake data cannot be deleted login and list list as admin first",
           title:"product 2"
         },
         {
           price:"100",
-          description:"fake data cannot be deleted list as admin first",
+          description:"fake data cannot be deleted login and list as admin first",
           title:"product 3"
         },
         {
           price:"100",
-          description:"fake data cannot be deleted list as admin first",
+          description:"fake data cannot be deleted login and list  as admin first",
           title:"product 4"
         },
         {
           price:"100",
-          description:"fake data cannot be deleted list as admin first",
+          description:"fake data cannot be deleted login and list as admin first",
           title:"product 5"
         }
       ]);
