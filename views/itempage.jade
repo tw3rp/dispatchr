@@ -3,12 +3,11 @@ extends layout
 block content
   include ./navbar.jade
   
-  
   .container
    .row
      .col-md-10.col-md-offset-1
        .thumbnail
-         img.img-responsive(src='http://placehold.it/800x300', alt='')
+         img.img-responsive(src="#{imageUrl}", alt='')
          .caption-full
            h4.pull-right $ #{item.price}
            h4

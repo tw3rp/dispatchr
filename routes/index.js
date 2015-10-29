@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var List= require('../models/list.js');
+var googleImages =  require('google-images');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var options = {
@@ -150,8 +151,9 @@ router.post('/postObject', function(req, res) {
 router.get('/itempage', function(req, res) {
   console.log(req.query.id);
   List.findOne({_id: req.query.id}, function(err,listItem){
-    console.log(listItem)
-    res.render('itempage',{item: listItem});
+    googleImages.search(listItem.title, function(err,images){
+    res.render('itempage',{item: listItem, imageUrl:images[0]["unescapedUrl"]});
+    })
   });
   
 });
