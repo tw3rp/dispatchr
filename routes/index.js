@@ -154,11 +154,11 @@ router.get('/itempage', function(req, res) {
     if(listItem){
       googleImages.search(listItem.title, function(err,images){
       res.render('itempage',{item: listItem, imageUrl:images[0]["unescapedUrl"]});
+        });
     }
     else{
       res.redirect('/');
     }
-    })
   });
   
 });
