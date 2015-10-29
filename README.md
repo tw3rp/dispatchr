@@ -10,3 +10,7 @@ Just sign up as a user to view stuff or signup as an admin to post stuff as well
 - go to http://localhost:3000/
 
 Started hacking with angular for this project :) 
+
+the app is deployed on heroku 
+
+https://dispatchrapp.herokuapp.com/
