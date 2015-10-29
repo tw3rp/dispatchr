@@ -159,6 +159,7 @@ angular.module('marketApp').controller('signupCtrl',['$scope','$http','$route','
       firstname:$scope.signup_user.firstname,
       admin:false
     }
+    console.log($scope.signup_user);
     $http({
       method  : 'POST',
       url     : '/signup',
@@ -176,7 +177,7 @@ angular.module('marketApp').controller('signupCtrl',['$scope','$http','$route','
         // if successful, bind success message to message
         
         $uibModalInstance.close($scope.signup);
-        $window.location.reload();
+       $window.location.reload();
       }
     });
     
@@ -228,7 +229,7 @@ angular.module('marketApp').controller('list-controller',function ($scope, $http
         url     : '/getPosts' // set the headers so angular passing info as request payload
       })
       .success(function(data) {
-        
+        console.log(data);
 
         if (data.message) {
           // if not successful, bind errors to error variables

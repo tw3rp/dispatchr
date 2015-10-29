@@ -130,10 +130,13 @@ router.post('/postObject', function(req, res) {
       res.json({message:"There is already an object with this title"})
     }
     else{
+      console.log(req.user);
       var newListObject = new List();
       newListObject.title =req.body.title;
       newListObject.description = req.body.description;
       newListObject.price = req.body.price;
+      newListObject.postedBy = req.user.local.firstName + " " + req.user.local.lastName;
+      newListObject.postedByID = req.user._id;
       newListObject.save(function(err){
         if(err)
           throw err;
@@ -144,6 +147,14 @@ router.post('/postObject', function(req, res) {
   })
 });
 
+router.get('/itempage', function(req, res) {
+  console.log(req.query.id);
+  List.findOne({_id: req.query.id}, function(err,listItem){
+    console.log(listItem)
+    res.render('itempage',{item: listItem});
+  });
+  
+});
 
 router.get('/logout', function(req, res) {
   req.logout();

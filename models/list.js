@@ -3,7 +3,9 @@ var mongoose = require('mongoose');
 var listSchema = mongoose.Schema({
     title:String,
     description: String,
-    price:Number
+    price:Number,
+    postedBy : String,
+    postedByID: String
 
 });
 
