@@ -44,6 +44,8 @@ var passport_export = function(passport){
           newUser.local.email = email;
           newUser.local.password = newUser.generateHash(password);
           newUser.local.admin =req.body.admin;
+          newUser.local.firstName = req.body.firstname;
+          newUser.local.lastName = req.body.lastname;
           newUser.save(function(err){
             if(err)
               throw err;

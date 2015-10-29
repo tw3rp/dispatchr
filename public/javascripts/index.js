@@ -155,6 +155,8 @@ angular.module('marketApp').controller('signupCtrl',['$scope','$http','$route','
     var sendData = {
       email:$scope.signup_user.email,
       password:$scope.signup_user.password,
+      lastname: $scope.signup_user.lastname,
+      firstname:$scope.signup_user.firstname,
       admin:false
     }
     $http({
@@ -188,6 +190,8 @@ angular.module('marketApp').controller('signupCtrl',['$scope','$http','$route','
     var sendData = {
       email:$scope.signup_admin.email,
       password:$scope.signup_admin.password,
+      lastname: $scope.signup_admin.lastname,
+      firstname:$scope.signup_admin.firstname,
       admin:true
     }
     $http({
