@@ -16,21 +16,22 @@ block content
 
   .container(ng-controller="list-controller" ng-init="list=[]")    
     .row
-      div(ng-repeat="x in list | filter:query")      
-      
-        .col-sm-4.col-lg-4.col-md-4
-          .thumbnail
-            .caption
-              a(href="/itempage?id={{x._id}}")
-                h4.pull-right ${{x.price}}
-              h4
-                a(href="/itempage?id={{x._id}}") {{x.title}}
-              p
-                | {{x.description}}
-              if user
-                if user.local.admin
-                  h4.pull-right
-                    a(ng-click="delete(x._id)" id="{{id}}" ) delete 
+      if user
+       div(ng-repeat="x in list | filter:query")      
+       
+         .col-sm-4.col-lg-4.col-md-4
+           .thumbnail
+             .caption
+               a(href="/itempage?id={{x._id}}")
+                 h4.pull-right ${{x.price}}
+               h4
+                 a(href="/itempage?id={{x._id}}") {{x.title}}
+               p
+                 | {{x.description}}
+               if user
+                 if user.local.admin
+                   h4.pull-right
+                     a(ng-click="delete(x._id)" id="{{id}}" ) delete 
 
 
   script(type='text/javascript', src='javascripts/jquery-2.1.4.min.js')

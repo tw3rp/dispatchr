@@ -157,7 +157,7 @@ angular.module('marketApp').controller('listCtrl',['$scope','$http','$route','$w
     $http({
       method  : 'POST',
       url     : '/postObject',
-      data    : $scope.list,  
+      data    : [$scope.list],  
       headers : { 'Content-Type': 'application/json' }  
     })
     .success(function(data) {

@@ -139,6 +139,8 @@ router.get('/getPosts', loggedIn,  function(req, res) {
 
 router.post('/postObject',loggedIn, function(req, res) {
   //   render the page and pass in any flash data if it exists
+ 
+  
   List.findOne({'title':req.body.title}, function(err,listObject){
     if(err){
       return err;
@@ -147,7 +149,7 @@ router.post('/postObject',loggedIn, function(req, res) {
       res.json({message:"There is already an object with this title"})
     }
     else{
-      console.log(req.user);
+      //console.log(req.body[0],i);
       var newListObject = new List();
       newListObject.title =req.body.title;
       newListObject.description = req.body.description;
@@ -161,7 +163,8 @@ router.post('/postObject',loggedIn, function(req, res) {
       })
     }
 
-  })
+  });
+
 });
 
 router.get('/itempage',loggedIn, function(req, res) {
