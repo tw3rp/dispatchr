@@ -14,7 +14,7 @@ block content
     h1 An awesome angular marketplace
     p.lead Single Page application
 
-  .container(ng-controller="list-controller")    
+  .container(ng-controller="list-controller" ng-init="list=[]")    
     .row
       div(ng-repeat="x in list | filter:query")      
       

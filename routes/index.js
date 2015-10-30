@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
+var passport = require('passport');
 var List= require('../models/list.js');
 var googleImages =  require('google-images');
 /* GET home page. */
@@ -9,13 +10,28 @@ router.get('/', function(req, res, next) {
     root: path.join(__dirname + '/../views'),
     dotfiles: 'deny',
   };
+  
   res.render('index',{ message: req.flash('signupMessage') });
   // res.render('index', { title: 'Express' });
 });
 
+router.get('/login_new',notloggedin, function(req,res,next){
+    console.log(req.flash('loginMessage'));
+    res.render('login.jade',{message:req.flash('loginMessage')});
+
+});
+
+router.post('/login_new', passport.authenticate('local-login', {
+        successRedirect : '/',
+        failureRedirect : '/login_new', 
+        failureFlash : true 
+}));
+
 router.get('/login_success', function(req, res) {
   //   render the page and pass in any flash data if it exists
+  
   res.json({success:req.user.local.email}); 
+  
 });
 
 router.get('/getUserData', function(req, res) {
@@ -24,7 +40,7 @@ router.get('/getUserData', function(req, res) {
 });
 
 router.get('/delete/:id',function(req,res){
-  console.log(req.params.id);  
+    
   List.remove({ _id: req.params.id }, function(err) {
     if (!err) {
       List.find({}, function(err,response){
@@ -82,7 +98,7 @@ router.get('/delete/:id',function(req,res){
   // }); 
 })
 
-router.get('/getPosts', function(req, res) {
+router.get('/getPosts', loggedIn,  function(req, res) {
   //   render the page and pass in any flash data if it exists
   List.find({}, function(err,response){
     if(response.length != 0){
@@ -121,7 +137,7 @@ router.get('/getPosts', function(req, res) {
   });    
 });
 
-router.post('/postObject', function(req, res) {
+router.post('/postObject',loggedIn, function(req, res) {
   //   render the page and pass in any flash data if it exists
   List.findOne({'title':req.body.title}, function(err,listObject){
     if(err){
@@ -148,7 +164,7 @@ router.post('/postObject', function(req, res) {
   })
 });
 
-router.get('/itempage', function(req, res) {
+router.get('/itempage',loggedIn, function(req, res) {
   console.log(req.query.id);
   List.findOne({_id: req.query.id}, function(err,listItem){
     if(listItem){
@@ -174,5 +190,22 @@ router.get('/signup_success', function(req, res) {
   res.json({success:req.user.local.email}); 
 });
 
+function loggedIn(req, res, next) {
+    if (req.user) {
+            next();
+        } else {
+                res.redirect('/login_new');
+            }
+}
+
+function notloggedin(req,res,next){
+    if(req.user){
+      res.redirect('/');
+    }
+      else{
+        next();
+      }
+
+}
 
 module.exports = router;

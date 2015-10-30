@@ -82,6 +82,40 @@ angular.module('marketApp').controller('ModalCtrl',function ($scope, $http, $uib
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // // It is not the same as the $uibModal service used above.
 
+angular.module('marketApp').controller('new-logincontroller',['$scope','$http','$route','$window','$location',function ($scope,$http,$route, $window,$location) {
+
+  
+  $scope.submit = function () {
+    console.log($scope.login.email);
+  console.log($scope.login.password);
+    
+    $http({
+      method  : 'POST',
+      url     : '/login_new',
+      data    : $scope.login,  
+      headers : { 'Content-Type': 'application/json' }  
+    })
+    .success(function(data) {
+      console.log(data);
+
+      if (data.message) {
+        // if not successful, bind errors to error variables
+        $scope.errors = data.message[0];
+        
+      } else {
+        // if successful, bind success message to message
+        
+        console.log(data);
+      }
+    });
+   
+  };
+
+  
+}]);
+
+
+
 angular.module('marketApp').controller('loginCtrl',['$scope','$http','$route','$window', '$uibModalInstance','$location',function ($scope,$http,$route, $window, $uibModalInstance,$location) {
 
 
@@ -224,6 +258,7 @@ angular.module('marketApp').controller('signupCtrl',['$scope','$http','$route','
 }]);
 
 angular.module('marketApp').controller('list-controller',function ($scope, $http, $uibModal, $log) {
+  
   $http({
         method  : 'GET',
         url     : '/getPosts' // set the headers so angular passing info as request payload

@@ -1,3 +1,21 @@
-if message.length>0
- #{message}
-      
+extends layout
+
+block content 
+  .container
+  .wrapper-login
+    form.form-signin-login(action='', method='post', name='Login_Form' ng-controller="new-logincontroller" ng-submit="submit()" ng-model="login")
+      h3.form-signin-heading Welcome Back! Please Sign In
+      hr.colorgraph
+      br
+      input.input-login.form-control(type='text', name='Username', placeholder='Username', required='', autofocus='' ng-model="login.email")
+      input.input-login.form-control(type='password', name='Password', placeholder='Password', required='' ng-model="login.password")
+      button.btn.btn-lg.btn-primary.btn-block(name='Submit', value='Login', type='submit') Login
+  
+
+  script(type='text/javascript', src='javascripts/jquery-2.1.4.min.js')
+  script(type='text/javascript', src='javascripts/angular.min.js')
+  script(src="javascripts/angular-route.js")
+  script(type='text/javascript', src='javascripts/angular-animate.js')
+  script(type='text/javascript', src='javascripts/bootstrap.min.js', integrity='sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==', crossorigin='anonymous')
+  script(type='text/javascript', src='javascripts/ui-bootstrap-tpls-0.14.3.min.js')
+  script(src='javascripts/index.js') 
