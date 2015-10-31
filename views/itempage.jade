@@ -3,29 +3,33 @@ extends layout
 block content
   include ./navbar.jade
   
-  .container
+  .container(ng-controller ="itempage-controller")
    .row
      .col-md-10.col-md-offset-1
        .thumbnail
          img.img-responsive(src="#{imageUrl}", alt='')
-         .caption-full
-           h4.pull-right $ #{item.price}
-           h4
-             h3 #{item.title}
-           p #{item.description}
-           p.pull-down posted by 
-           a.pulldown(href="#") #{item.postedBy}
-             
-         .ratings
-           p.pull-right 3 reviews
-           p
-             span.glyphicon.glyphicon-star
-             span.glyphicon.glyphicon-star
-             span.glyphicon.glyphicon-star
-             span.glyphicon.glyphicon-star
-             span.glyphicon.glyphicon-star-empty
-             |                             4.0 stars
-       
+         if item
+          .caption-full
+             h4.pull-right $ #{item.price}
+             h4
+               h3 #{item.title}
+             p #{item.description}
+             p.pull-down posted by 
+             a.pulldown(href="#") #{item.postedBy}  
+
+             h4.pull-right
+               a(ng-click="addtocart($event)" id="#{item._id}" ) Add to Cart
+               
+           .ratings
+             p.pull-right 3 reviews
+             p
+               span.glyphicon.glyphicon-star
+               span.glyphicon.glyphicon-star
+               span.glyphicon.glyphicon-star
+               span.glyphicon.glyphicon-star
+               span.glyphicon.glyphicon-star-empty
+               |                             4.0 stars
+         
   script(type='text/javascript', src='/javascripts/jquery-2.1.4.min.js')
   script(type='text/javascript', src='/javascripts/angular.min.js')
   script(src="javascripts/angular-route.js")

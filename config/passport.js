@@ -49,6 +49,7 @@ var passport_export = function(passport){
           newUser.save(function(err){
             if(err)
               throw err;
+            req.session.itemincart = [];
             return done(null,newUser);
           });
         }
@@ -75,6 +76,7 @@ var passport_export = function(passport){
       if(!user.validPassword(password)){
         return done(null, false, req.flash('loginMessage', "Oops! Wrong password"));
       }
+      req.session.itemincart = [];
       return done(null,user);
     })
   }));

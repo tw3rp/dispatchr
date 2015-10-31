@@ -295,8 +295,90 @@ angular.module('marketApp').controller('list-controller',function ($scope, $http
       });
 
   };
+
+  $scope.addtocart =function(item) {
+     
+     $http({
+        method  : 'POST',
+        url     : '/cart/'+ item // set the headers so angular passing info as request payload
+      })
+      .success(function(data) {
+        console.log(data);
+        if (data.message) {
+          // if not successful, bind errors to error variables
+          
+          $scope.errors_admin = data.message[0]
+        } else {
+          // if successful, bind success message to message
+          $scope.list=data;
+        }
+      });
+
+  };
   
 
   
 
 })
+
+
+angular.module('marketApp').controller('itempage-controller',function ($scope, $http, $uibModal, $log) {
+  
+
+  $scope.addtocart =function(item) {
+      var sendItem = item.target.attributes.id.value
+     
+     $http({
+        method  : 'POST',
+        url     : '/cart/'+ sendItem // set the headers so angular passing info as request payload
+      })
+      .success(function(data) {
+        console.log(data);
+        if (data.message) {
+          // if not successful, bind errors to error variables
+          
+          $scope.errors_admin = data.message[0]
+        } else {
+          // if successful, bind success message to message
+          $scope.list=data;
+        }
+      });
+
+  };
+  
+
+  
+
+})
+
+angular.module('marketApp').controller('itempage-controller',['$scope','$http','$route','$window','$location',function ($scope,$http,$route, $window,$location) {
+
+  
+  $scope.submit = function () {
+    console.log($scope.login.email);
+  console.log($scope.login.password);
+    
+    $http({
+      method  : 'POST',
+      url     : '/login_new',
+      data    : $scope.login,  
+      headers : { 'Content-Type': 'application/json' }  
+    })
+    .success(function(data) {
+      console.log(data);
+
+      if (data.message) {
+        // if not successful, bind errors to error variables
+        $scope.errors = data.message[0];
+        
+      } else {
+        // if successful, bind success message to message
+        
+        console.log(data);
+      }
+    });
+   
+  };
+
+  
+}]);

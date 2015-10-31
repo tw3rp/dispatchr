@@ -1,8 +1,8 @@
 extends layout
 
 block content 
-  include ./navbar.jade
-   .container
+     include ./navbar.jade
+     .container(ng-controller="cartpage")
      .row
        .col-sm-12.col-md-10.col-md-offset-1
          table.table.table-hover
@@ -21,47 +21,21 @@ block content
                      img.media-object(src='http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png', style='width: 72px; height: 72px;')
                    .media-body
                      h4.media-heading
-                       a(href='#') Product name
+                       a(href='#') #{item.title}
                      h5.media-heading
-                       | by 
-                       a(href='#') Brand name
-                     span Status: 
-                     span.text-success
-                       strong In Stock
+                       |  
+                       a(href='#') #{item.description}
                td.col-sm-1.col-md-1(style='text-align: center')
-                 input#exampleInputEmail1.form-control(type='email', value='3')
+                 input#exampleInputEmail1.form-control(type='email', value='{{quantity}}')
                td.col-sm-1.col-md-1.text-center
-                 strong $4.87
+                 strong $ #{item.price}
                td.col-sm-1.col-md-1.text-center
                  strong $14.61
                td.col-sm-1.col-md-1
                  button.btn.btn-danger(type='button')
                    span.glyphicon.glyphicon-remove
                    |  Remove
-             tr
-               td.col-md-6
-                 .media
-                   a.thumbnail.pull-left(href='#')
-                     img.media-object(src='http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png', style='width: 72px; height: 72px;')
-                   .media-body
-                     h4.media-heading
-                       a(href='#') Product name
-                     h5.media-heading
-                       | by 
-                       a(href='#') Brand name
-                     span Status: 
-                     span.text-warning
-                       strong Leaves warehouse in 2 - 3 weeks
-               td.col-md-1(style='text-align: center')
-                 input#exampleInputEmail1.form-control(type='email', value='2')
-               td.col-md-1.text-center
-                 strong $4.99
-               td.col-md-1.text-center
-                 strong $9.98
-               td.col-md-1
-                 button.btn.btn-danger(type='button')
-                   span.glyphicon.glyphicon-remove
-                   |  Remove
+             
              tr
                td    
                td    
@@ -102,10 +76,10 @@ block content
                    | Checkout 
                    span.glyphicon.glyphicon-play
 
-  script(type='text/javascript', src='javascripts/jquery-2.1.4.min.js')
-  script(type='text/javascript', src='javascripts/angular.min.js')
-  script(src="javascripts/angular-route.js")
-  script(type='text/javascript', src='javascripts/angular-animate.js')
-  script(type='text/javascript', src='javascripts/bootstrap.min.js', integrity='sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==', crossorigin='anonymous')
-  script(type='text/javascript', src='javascripts/ui-bootstrap-tpls-0.14.3.min.js')
-  script(src='javascripts/index.js') 
+     script(type='text/javascript', src='javascripts/jquery-2.1.4.min.js')
+     script(type='text/javascript', src='javascripts/angular.min.js')
+     script(src="javascripts/angular-route.js")
+     script(type='text/javascript', src='javascripts/angular-animate.js')
+     script(type='text/javascript', src='javascripts/bootstrap.min.js', integrity='sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==', crossorigin='anonymous')
+     script(type='text/javascript', src='javascripts/ui-bootstrap-tpls-0.14.3.min.js')
+     script(src='javascripts/index.js') 

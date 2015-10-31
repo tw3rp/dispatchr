@@ -171,6 +171,7 @@ router.get('/itempage',loggedIn, function(req, res) {
   console.log(req.query.id);
   List.findOne({_id: req.query.id}, function(err,listItem){
     if(listItem){
+      console.log(listItem);
       googleImages.search(listItem.title, function(err,images){
       res.render('itempage',{item: listItem, imageUrl:images[0]["unescapedUrl"]});
         });
