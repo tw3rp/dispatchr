@@ -5,9 +5,9 @@ var List= require('../models/list.js');
 router.get('/', loggedIn ,function(req, res, next) {
   var objectstobesent =[];
   for (var i=0;i<req.session.itemincart.length;i++){
-  	console.log(i);
+  	
   	List.findOne({_id:req.session.itemincart[i]}, function(err,item){
-  		console.log(item);
+  		//console.log(item);
   		if (err){
   			res.send(err);
   		}
@@ -21,7 +21,7 @@ router.get('/', loggedIn ,function(req, res, next) {
   	
 		  	
 
-  
+  console.log(objectstobesent);
   res.render('cart',{item:objectstobesent});
   });
 

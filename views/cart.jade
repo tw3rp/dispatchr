@@ -2,6 +2,9 @@ extends layout
 
 block content 
      include ./navbar.jade
+     script.
+      var item= !{JSON.stringify(item)};
+      console.log(item);
      .container(ng-controller="cartpage")
      .row
        .col-sm-12.col-md-10.col-md-offset-1
@@ -26,7 +29,7 @@ block content
                        |  
                        a(href='#') #{item.description}
                td.col-sm-1.col-md-1(style='text-align: center')
-                 input#exampleInputEmail1.form-control(type='email', value='{{quantity}}')
+                 input#exampleInputEmail1.form-control(type='email', value='3')
                td.col-sm-1.col-md-1.text-center
                  strong $ #{item.price}
                td.col-sm-1.col-md-1.text-center

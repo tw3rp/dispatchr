@@ -157,7 +157,7 @@ angular.module('marketApp').controller('listCtrl',['$scope','$http','$route','$w
     $http({
       method  : 'POST',
       url     : '/postObject',
-      data    : [$scope.list],  
+      data    : $scope.list,  
       headers : { 'Content-Type': 'application/json' }  
     })
     .success(function(data) {
@@ -351,34 +351,3 @@ angular.module('marketApp').controller('itempage-controller',function ($scope, $
 
 })
 
-angular.module('marketApp').controller('itempage-controller',['$scope','$http','$route','$window','$location',function ($scope,$http,$route, $window,$location) {
-
-  
-  $scope.submit = function () {
-    console.log($scope.login.email);
-  console.log($scope.login.password);
-    
-    $http({
-      method  : 'POST',
-      url     : '/login_new',
-      data    : $scope.login,  
-      headers : { 'Content-Type': 'application/json' }  
-    })
-    .success(function(data) {
-      console.log(data);
-
-      if (data.message) {
-        // if not successful, bind errors to error variables
-        $scope.errors = data.message[0];
-        
-      } else {
-        // if successful, bind success message to message
-        
-        console.log(data);
-      }
-    });
-   
-  };
-
-  
-}]);
